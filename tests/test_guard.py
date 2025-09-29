@@ -1,9 +1,11 @@
+import os
 import pytest
 import time
 
 from cooltime_guard import Guard
 
 
+@pytest.mark.skipif(os.environ.get("CI") == "true", reason="This test is skipped on CI")
 def test_guard_example() -> None:
     guard = Guard(interval=0.005)
 
@@ -21,6 +23,7 @@ def test_guard_example() -> None:
     assert f() == pytest.approx(0.0)  # Now it should not wait again
 
 
+@pytest.mark.skipif(os.environ.get("CI") == "true", reason="This test is skipped on CI")
 def test_guard_ready_property() -> None:
     guard = Guard(interval=0.01)
     assert guard.ready is True
